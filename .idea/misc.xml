@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Estudos/DIO/bankline-android/app/src/main/res/drawable/ic_money_in.xml" value="0.1935" />
+        <entry key="..\:/Estudos/DIO/bankline-android/app/src/main/res/drawable/ic_money_out.xml" value="0.1935" />
         <entry key="..\:/Estudos/DIO/bankline-android/app/src/main/res/layout/active_welcome.xml" value="0.33" />
         <entry key="..\:/Estudos/DIO/bankline-android/app/src/main/res/layout/activity_bank_statement.xml" value="0.18541666666666667" />
+        <entry key="..\:/Estudos/DIO/bankline-android/app/src/main/res/layout/bank_statement_item.xml" value="0.1" />
       </map>
     </option>
   </component>
