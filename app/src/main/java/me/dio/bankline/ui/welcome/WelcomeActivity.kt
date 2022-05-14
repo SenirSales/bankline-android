@@ -3,9 +3,8 @@ package me.dio.bankline.ui.welcome
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import me.dio.bankline.R
 import me.dio.bankline.databinding.ActiveWelcomeBinding
-import me.dio.bankline.domian.Correntista
+import me.dio.bankline.domain.Correntista
 import me.dio.bankline.ui.statement.BankStatementActivity
 
 class WelcomeActivity : AppCompatActivity() {

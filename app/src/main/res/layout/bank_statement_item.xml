@@ -19,7 +19,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_money_in" />
-            //tools:src="@drawable/ic_money_on" />
 
         <TextView
             android:id="@+id/tvDescription"

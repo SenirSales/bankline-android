@@ -1,4 +1,4 @@
-package me.dio.bankline.domian
+package me.dio.bankline.domain
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

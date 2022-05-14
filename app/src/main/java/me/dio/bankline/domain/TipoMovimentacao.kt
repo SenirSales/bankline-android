@@ -1,4 +1,4 @@
-package me.dio.bankline.domian
+package me.dio.bankline.domain
 
 enum class TipoMovimentacao {
     RECEITA, DESPESA

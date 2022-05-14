@@ -2,14 +2,12 @@ package me.dio.bankline.ui.statement
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import me.dio.bankline.R
-import me.dio.bankline.databinding.ActiveWelcomeBinding
+import com.google.android.material.snackbar.Snackbar
 import me.dio.bankline.databinding.ActivityBankStatementBinding
-import me.dio.bankline.domian.Correntista
-import me.dio.bankline.domian.Movimentacao
-import me.dio.bankline.domian.TipoMovimentacao
+import me.dio.bankline.domain.Correntista
+import me.dio.bankline.domain.data.State
 
 class BankStatementActivity : AppCompatActivity() {
     companion object {
@@ -23,6 +21,9 @@ class BankStatementActivity : AppCompatActivity() {
     private val accountHolder by lazy {
         intent.getParcelableExtra<Correntista>(EXTRA_ACCOUNT_HOLDER) ?: throw IllegalArgumentException()
     }
+
+    private val viewModel by viewModels<BankStatementViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -32,16 +33,32 @@ class BankStatementActivity : AppCompatActivity() {
 
         findBankStatement()
 
+        binding.srlBankStatement.setOnRefreshListener { findBankStatement() }
     }
 
     private fun findBankStatement() {
-        val dataSet = ArrayList<Movimentacao>()
         // Add itens ao iniciar a aplicacao pela primeira vez
+        //        val dataSet = ArrayList<Movimentacao>()
         //        dataSet.add(Movimentacao(1,"03/05/2022", "Ipsum", 1000.00, TipoMovimentacao.RECEITA, idCorrentista = 1 ))
         //        dataSet.add(Movimentacao(1,"03/05/2022", "Ipsum", 1000.00, TipoMovimentacao.DESPESA, idCorrentista = 1 ))
         //        dataSet.add(Movimentacao(1,"03/05/2022", "Ipsum", 1000.00, TipoMovimentacao.RECEITA, idCorrentista = 1 ))
         //        dataSet.add(Movimentacao(1,"03/05/2022", "Ipsum", 1000.00, TipoMovimentacao.DESPESA, idCorrentista = 1 ))
         //        dataSet.add(Movimentacao(1,"03/05/2022", "Ipsum", 1000.00, TipoMovimentacao.RECEITA, idCorrentista = 1 ))
         //        binding.rvBankStatement.adapter = BankStatementAdapter(dataSet)
+
+        viewModel.findBankStatement(accountHolder.id).observe(this) { state ->
+            when(state) {
+                is State.Sucesso -> {
+                    binding.rvBankStatement.adapter = state.data?.let { BankStatementAdapter(it) }
+                    binding.srlBankStatement.isRefreshing = false
+                }
+                is State.Error -> {
+                    state.message?.let { Snackbar.make(binding.rvBankStatement, it, Snackbar.LENGTH_LONG).show() }
+                    binding.srlBankStatement.isRefreshing = false
+                }
+                State.Wait -> binding.srlBankStatement.isRefreshing = true
+            }
+        }
+
     }
 }
